@@ -18,8 +18,11 @@ const ContextProvider = ({ children }) => {
   const register = async (input) => {
     try {
       const { data } = await axios.post("/auth/register", { ...input });
-      // console.log(data.name);
-      setState({ ...state, user: data.name });
+      setState({ ...state, user: data.users.name });
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ name: data.user.name, token: data.token })
+      );
     } catch (error) {
       console.log(error);
     }
@@ -28,7 +31,6 @@ const ContextProvider = ({ children }) => {
   const login = async (input) => {
     try {
       const { data } = await axios.post("/auth/login", { ...input });
-      console.log(data.name);
       setState({ ...state, user: data.name });
       localStorage.setItem(
         "user",
@@ -46,7 +48,6 @@ const ContextProvider = ({ children }) => {
 
   const createPost = async (post) => {
     try {
-      console.log(post);
       const { data } = await axios.post("/posts", { ...post });
 
       setState({ ...state, posts: [data.posts, ...state.posts] });

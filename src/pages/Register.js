@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 import FormRow from "../components/FormRow";
 // import DashBoard from "./Dashboard";
@@ -84,9 +84,6 @@ function Register() {
               >
                 {users.isMember ? "Register" : "Login"}
               </button>
-              <Link to="/dashboard" className="btn">
-                dashboard
-              </Link>
             </p>
           </form>
         </div>
