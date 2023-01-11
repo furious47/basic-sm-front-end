@@ -7,7 +7,7 @@ import styled from "styled-components";
 import FormRow from "../components/FormRow";
 
 const DashBoard = () => {
-  const { getAllPost, createPost } = useGlobalContext();
+  const { getAllPost, createPost, isloading } = useGlobalContext();
   const [post, setPost] = useState({ post: "" });
 
   const handleChange = (e) => {
@@ -35,7 +35,9 @@ const DashBoard = () => {
               value={post.post}
               handleChange={handleChange}
             />
-            <button className="btn btn-block">Post</button>
+            <button className="btn btn-block" disabled={isloading}>
+              {isloading ? "Loading" : "Post"}
+            </button>
           </form>
         </div>
 

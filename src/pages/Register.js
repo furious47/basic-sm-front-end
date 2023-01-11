@@ -10,7 +10,7 @@ function Register() {
     name: "",
     email: "",
     password: "",
-    isMember: true,
+    isMember: false,
   });
 
   const { user, login, register, alert, isloading } = useGlobalContext();
@@ -41,7 +41,9 @@ function Register() {
       <Wrapper className="page full-page">
         <div className="container">
           {alert && (
-            <div className="alert alert-danger">Invalid Credentials</div>
+            <div className="alert alert-danger">
+              {users.isMember ? "Invalid Credntials" : "Fill all the Fields"}
+            </div>
           )}
 
           <form className="form" onSubmit={handleSubmit}>

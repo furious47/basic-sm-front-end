@@ -23,7 +23,8 @@ const ContextProvider = ({ children }) => {
     loading();
     try {
       const { data } = await axios.post("/auth/register", { ...input });
-      setState({ ...state, isloading: false, user: data.users.name });
+      console.log(data.user.name);
+      setState({ ...state, isloading: false, user: data.user.name });
       localStorage.setItem(
         "user",
         JSON.stringify({ name: data.user.name, token: data.token })
@@ -53,12 +54,17 @@ const ContextProvider = ({ children }) => {
   };
 
   const createPost = async (post) => {
+    loading();
     try {
       const { data } = await axios.post("/posts", { ...post });
 
-      setState({ ...state, posts: [data.posts, ...state.posts] });
+      setState({
+        ...state,
+        isloading: false,
+        posts: [data.posts, ...state.posts],
+      });
     } catch (error) {
-      console.log(error);
+      setState({ ...state, alert: true, isloading: false });
     }
   };
 
