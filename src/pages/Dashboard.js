@@ -20,7 +20,7 @@ const DashBoard = () => {
   };
 
   useEffect(() => {
-    getAllPost(post);
+    getAllPost();
   }, []);
 
   return (

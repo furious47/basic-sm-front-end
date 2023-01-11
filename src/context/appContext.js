@@ -29,7 +29,7 @@ const ContextProvider = ({ children }) => {
         JSON.stringify({ name: data.user.name, token: data.token })
       );
     } catch (error) {
-      setState({ ...state, alert: true, isloading: false });
+      setState({ ...state, user: null, alert: true, isloading: false });
     }
   };
 
@@ -40,7 +40,7 @@ const ContextProvider = ({ children }) => {
       setState({ ...state, isloading: false, user: data.name });
       localStorage.setItem(
         "user",
-        JSON.stringify({ name: data.name, token: data.token })
+        JSON.stringify({ name: data.name, isloading: false, token: data.token })
       );
     } catch (error) {
       setState({ ...state, alert: true, isloading: false });
@@ -73,7 +73,7 @@ const ContextProvider = ({ children }) => {
 
   const getOnePost = async (id) => {
     try {
-      const { data } = await axios.get(`posts/${id}`);
+      const { data } = await axios.get(`/posts/${id}`);
       setState({ ...state, editItem: data });
     } catch (error) {
       console.log(error);
