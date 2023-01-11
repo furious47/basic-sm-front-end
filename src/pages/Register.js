@@ -13,7 +13,7 @@ function Register() {
     isMember: true,
   });
 
-  const { user, login, register, alert } = useGlobalContext();
+  const { user, login, register, alert, isloading } = useGlobalContext();
   // loading();
 
   const toggleMember = () => {
@@ -70,8 +70,12 @@ function Register() {
               handleChange={handleChange}
             />
 
-            <button type="submit" className="btn btn-block">
-              {!users.isMember ? "Sign Up" : "Sign In"}
+            <button
+              type="submit"
+              className="btn btn-block"
+              disabled={isloading}
+            >
+              {isloading ? "Loading ..." : "Submit"}
             </button>
 
             <p>
