@@ -76,7 +76,7 @@ const Edit = () => {
               handleChange={handleChange}
             />
             <button className="btn" disabled={isloading}>
-              {isloading ? "Editing" : "Edit..."}
+              {isloading ? "Editing..." : "Edit"}
             </button>
           </form>
         </div>
