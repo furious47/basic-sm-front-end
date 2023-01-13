@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import Posts from "../components/Posts";
 import Logout from "../components/Logout";
 import { useGlobalContext } from "../context/appContext";
@@ -7,7 +8,7 @@ import styled from "styled-components";
 import FormRow from "../components/FormRow";
 
 const DashBoard = () => {
-  const { getAllPost, createPost, isloading } = useGlobalContext();
+  const { user, getAllPost, createPost, isloading } = useGlobalContext();
   const [post, setPost] = useState({ post: "" });
 
   const handleChange = (e) => {
@@ -25,6 +26,7 @@ const DashBoard = () => {
 
   return (
     <>
+      {!user && <Redirect to="/" />}
       <Logout />
       <Wrapper className="page full-page">
         <div className="container">
@@ -39,9 +41,8 @@ const DashBoard = () => {
               {isloading ? "Loading" : "Post"}
             </button>
           </form>
+          <Posts />
         </div>
-
-        <Posts />
       </Wrapper>
     </>
   );

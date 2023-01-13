@@ -10,27 +10,40 @@ const ContextProvider = ({ children }) => {
     posts: [],
     isloading: false,
     alert: false,
+    onePostErr: false,
+    errMsg: null,
+    editComplete: false,
     editItem: null,
   };
 
   const [state, setState] = useState(intialState);
 
   const loading = () => {
-    setState({ ...state, isloading: true, alert: false });
+    setState({ ...state, isloading: true, errMsg: null, alert: false });
   };
 
   const register = async (input) => {
     loading();
     try {
       const { data } = await axios.post("/auth/register", { ...input });
-      console.log(data.user.name);
       setState({ ...state, isloading: false, user: data.user.name });
       localStorage.setItem(
         "user",
-        JSON.stringify({ name: data.user.name, token: data.token })
+        JSON.stringify({
+          name: data.user.name,
+          isloading: false,
+          token: data.token,
+        })
       );
     } catch (error) {
-      setState({ ...state, user: null, alert: true, isloading: false });
+      const err = error.response.data.msg;
+      setState({
+        ...state,
+        user: null,
+        alert: true,
+        errMsg: err,
+        isloading: false,
+      });
     }
   };
 
@@ -38,13 +51,21 @@ const ContextProvider = ({ children }) => {
     loading();
     try {
       const { data } = await axios.post("/auth/login", { ...input });
+      console.log(data);
       setState({ ...state, isloading: false, user: data.name });
       localStorage.setItem(
         "user",
         JSON.stringify({ name: data.name, isloading: false, token: data.token })
       );
     } catch (error) {
-      setState({ ...state, alert: true, isloading: false });
+      const err = error.response.data.msg;
+      setState({
+        ...state,
+        user: null,
+        alert: true,
+        errMsg: err,
+        isloading: false,
+      });
     }
   };
 
@@ -69,38 +90,57 @@ const ContextProvider = ({ children }) => {
   };
 
   const getAllPost = async () => {
+    loading();
     try {
       const { data } = await axios.get("/posts");
-      setState({ ...state, posts: data.posts });
+      setState({
+        ...state,
+        isloading: false,
+        editComplete: false,
+        posts: data.posts,
+      });
     } catch (error) {
-      console.log(error);
+      setState({ ...state, alert: true, isloading: false });
     }
   };
 
   const getOnePost = async (id) => {
+    loading();
     try {
       const { data } = await axios.get(`/posts/${id}`);
-      setState({ ...state, editItem: data });
+      setState({ ...state, isloading: false, editItem: data.posts.post });
     } catch (error) {
-      console.log(error);
+      setState({
+        ...state,
+        onePostErr: true,
+        isloading: false,
+        editItem: null,
+      });
     }
   };
 
   const updatePost = async (id, input) => {
+    loading();
     try {
       const { data } = await axios.patch(`/posts/${id}`, { ...input });
-      setState({ ...state, posts: [...state.posts, data] });
+      setState({
+        ...state,
+        isloading: false,
+        editComplete: true,
+        posts: [...state.posts, data],
+      });
     } catch (error) {
-      console.log(error);
+      setState({ ...state, isloading: false, editItem: null });
     }
   };
 
   const deletePost = async (id) => {
+    loading();
     try {
       await axios.delete(`/posts/${id}`);
       getAllPost();
     } catch (error) {
-      console.log(error);
+      setState({ ...state, isloading: false });
     }
   };
 

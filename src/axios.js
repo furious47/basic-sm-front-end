@@ -1,5 +1,5 @@
 import axios from "axios";
-
+// https://basic-sm.onrender.com/api/v1/
 axios.defaults.baseURL = "https://basic-sm.onrender.com/api/v1/";
 
 axios.interceptors.request.use(function (req) {

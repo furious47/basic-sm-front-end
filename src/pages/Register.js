@@ -13,11 +13,18 @@ function Register() {
     isMember: false,
   });
 
-  const { user, login, register, alert, isloading } = useGlobalContext();
+  const { user, login, register, alert, isloading, errMsg } =
+    useGlobalContext();
   // loading();
 
   const toggleMember = () => {
-    setUser({ ...users, isMember: !users.isMember });
+    setUser({
+      ...users,
+      name: "",
+      email: "",
+      password: "",
+      isMember: !users.isMember,
+    });
   };
 
   const handleChange = (e) => {
@@ -35,6 +42,9 @@ function Register() {
   };
   // console.log(user);
 
+  // : users.isMember
+  //               ? "Invalid Credntials"
+
   return (
     <>
       {user && <Redirect to="/dashboard" />}
@@ -42,7 +52,7 @@ function Register() {
         <div className="container">
           {alert && (
             <div className="alert alert-danger">
-              {users.isMember ? "Invalid Credntials" : "Fill all the Fields"}
+              {errMsg ? errMsg : "Something went wrong try again"}
             </div>
           )}
 

@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import PrivateRoute from "./pages/PrivateRoute";
-import { DashBoard, Register, PrivateRoute } from "./pages";
+import { DashBoard, Register, PrivateRoute, Edit } from "./pages";
 
 const App = () => {
   return (
@@ -12,6 +12,9 @@ const App = () => {
         <PrivateRoute path="/dashboard" exact>
           <DashBoard />
         </PrivateRoute>
+        <Route path="/edit/:id">
+          <Edit />
+        </Route>
       </Switch>
     </BrowserRouter>
   );
