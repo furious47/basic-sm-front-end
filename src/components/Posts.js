@@ -29,7 +29,7 @@ const Posts = () => {
               <div className="content">{post}</div>
               <div className="btn-con">
                 <Link to={`/edit/${_id}`}>
-                  <button className="btn">edit</button>{" "}
+                  <button className="btn">edit</button>
                 </Link>
                 <button
                   className="btn"
