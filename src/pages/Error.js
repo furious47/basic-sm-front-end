@@ -8,7 +8,7 @@ const Error = () => {
       <ErrorContainer>
         <h5>There was an error! Please go back to Home</h5>
         <Link to="/" className="btn">
-          Dashboard
+          Home
         </Link>
       </ErrorContainer>
     
