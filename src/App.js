@@ -16,7 +16,7 @@ const App = () => {
           <Edit />
         </Route>
 
-        <Route path="*">
+        <Route path='*'>
           <Error />
         </Route>
       </Switch>
